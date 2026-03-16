@@ -4,87 +4,146 @@
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f2f2f2;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #e9eef2;
   color: #333;
 }
 
-.page {
-  max-width: 1180px;
-  margin: 20px auto;
-  padding: 10px;
+.page-container {
+  width: 95%;
+  max-width: 1220px;
+  margin: 12px auto;
 }
 
 .forum-section {
-  background: #ffffff;
-  border: 1px solid #d6d6d6;
-  border-radius: 6px;
+  background: #fdfdfd;
+  border: 1px solid #cfd7dd;
+  border-radius: 4px;
+  margin-bottom: 18px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .section-header {
-  background: linear-gradient(to bottom, #26b6e6, #1198cd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: linear-gradient(to bottom, #37bee8, #0898cd);
   color: white;
-  padding: 14px 20px;
 }
 
-.section-header h2 {
+.section-header-left h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.section-header p {
-  margin: 4px 0 0;
-  font-size: 13px;
+.section-header-left p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #dff7ff;
+}
+
+.collapse-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.forum-table-header {
+  display: grid;
+  grid-template-columns: 1.8fr 0.6fr 0.9fr;
+  padding: 8px 14px;
+  background: #f3f3f3;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #dddddd;
+  font-size: 12px;
+  color: #666;
+  font-weight: bold;
+}
+
+.col-lastpost {
+  text-align: left;
 }
 
 .forum-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 18px 20px;
-  border-top: 1px solid #e5e5e5;
-  background-color: #fafafa;
-}
-
-.forum-left {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.8fr 0.6fr 0.9fr;
   gap: 14px;
-  flex: 1.8;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e6e6e6;
+  background: #ffffff;
 }
 
-.icon {
-  font-size: 28px;
-  width: 42px;
-  text-align: center;
-  margin-top: 4px;
+.forum-row:last-child {
+  border-bottom: none;
+}
+
+.forum-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.forum-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  margin-top: 2px;
+  flex-shrink: 0;
+  position: relative;
+  border: 1px solid #cfcfcf;
+}
+
+.forum-icon.green {
+  background: radial-gradient(circle at 30% 30%, #dfff91, #7ebd28);
+}
+
+.forum-icon.gray {
+  background: radial-gradient(circle at 30% 30%, #ffffff, #c5c5c5);
+}
+
+.forum-icon::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 9px;
+  width: 16px;
+  height: 11px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .forum-info h3 {
-  margin: 0 0 6px;
-  font-size: 20px;
-  color: #78a800;
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #7cab00;
+  line-height: 1.2;
 }
 
 .forum-info h3 span {
-  color: #666;
-  font-size: 13px;
+  color: #777;
+  font-size: 12px;
   font-weight: normal;
 }
 
 .forum-info p {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 13px;
   color: #666;
+  line-height: 1.35;
 }
 
 .forum-stats {
-  flex: 0.7;
-  font-size: 14px;
+  font-size: 13px;
   color: #555;
+  padding-top: 4px;
 }
 
 .forum-stats p {
@@ -92,15 +151,21 @@ body {
 }
 
 .forum-lastpost {
-  flex: 1;
-  font-size: 14px;
+  font-size: 13px;
   color: #555;
+  padding-top: 4px;
 }
 
-.forum-lastpost h4 {
-  margin: 0 0 6px;
-  font-size: 15px;
-  color: #333;
+.forum-lastpost a {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #4f4f4f;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.forum-lastpost a:hover {
+  text-decoration: underline;
 }
 
 .forum-lastpost p {
@@ -108,12 +173,20 @@ body {
 }
 
 @media (max-width: 900px) {
+  .forum-table-header {
+    display: none;
+  }
+
   .forum-row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .forum-stats,
   .forum-lastpost {
-    width: 100%;
+    padding-top: 0;
+  }
+
+  .forum-info h3 {
+    font-size: 16px;
   }
 }
