@@ -6,6 +6,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./infrastructure/database/mongo";
+import ForumSectionModel from "./infrastructure/models/ForumSection";
 
 dotenv.config();
 connectDB(); // connect with DB
@@ -19,9 +20,16 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Route hardcoded for testing
-app.get("/", (req, res) => {
-  res.send("Forum backend is running");
+// Route forum sections data
+app.get("/api/forum-sections", async (req, res) => {
+  // res.send("Forum backend is running");
+  try {
+    const sections = await ForumSectionModel.find(); // Read the real data from DB
+    res.json(sections); // Send data to browser
+  } catch (error) {
+    console.log("Error fetching firum sections: ", error);
+    res.status(500).json({ message: "Failed to fetch forum sections" });
+  }
 });
 
 // Execute server
