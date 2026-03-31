@@ -17,11 +17,16 @@ const forumSchema = new mongoose.Schema({
   lastPost: lastPostSchema,
 });
 
-const forumSectionSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  forums: [forumSchema],
-});
+const forumSectionSchema = new mongoose.Schema(
+  {
+    title: String,
+    description: String,
+    forums: [forumSchema],
+  },
+  {
+    collection: "forumSections",
+  },
+);
 
 const ForumSectionModel = mongoose.model("ForumSection", forumSectionSchema);
 
