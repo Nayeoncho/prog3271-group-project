@@ -1,3 +1,4 @@
+// Entry point - responsible only for middleware setup and route registration
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -9,15 +10,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+// Middleware registration
+app.use(cors());           // allows API calls from a different port (frontend)
+app.use(express.json());   // parses request body as JSON
 
+// Health check
 app.get("/", (req, res) => {
   res.send("Forum backend is running");
 });
 
+// Route registration - add new routes here with a single line
 app.use("/api", forumRoutes);
 
+// Start server after DB connection
 connectDB()
   .then(() => {
     app.listen(port, () => {
