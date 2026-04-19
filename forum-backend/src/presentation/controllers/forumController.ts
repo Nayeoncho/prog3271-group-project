@@ -2,6 +2,7 @@
 // Receives HTTP requests, processes them, and returns responses
 import { Request, Response } from "express";
 import ForumSectionModel from "../../infrastructure/models/ForumSection";
+import { createdPost, getAllPosts, getPostById } from "../../application/usecases/post";
 
 // GET /api/forum-sections
 // Fetches all forum sections from MongoDB and returns them as JSON
@@ -14,3 +15,22 @@ export const getForumSections = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to fetch forum sections" });
   }
 };
+
+// POST /api/posts
+export const createPostHandler = async (req: Request, res: Response) => {
+  try {
+    const {title, content, authorId, authorName} = req.body;
+
+    const post = await createdPost({
+      title,
+      content,
+      authorId,
+      authorName,
+    });
+
+    res.status(201).json(post);
+  } catch (error) {
+    console.error("Error creating post:", error);
+    res.status(500).json({message: "Failed to create post"});
+  }
+}
