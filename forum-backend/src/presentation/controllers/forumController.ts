@@ -19,7 +19,13 @@ export const getForumSections = async (req: Request, res: Response) => {
 // POST /api/posts
 export const createPostHandler = async (req: Request, res: Response) => {
   try {
-    const {title, content, authorId, authorName} = req.body;
+
+    const {title, content, authorId, authorName} = req.body; // using this for now since we don't have login/JWT wired yet
+
+    // uncomment below after PSGP-4 is done
+    // const authorId = req.user.id;
+    // const authorName = req.user.username;
+
 
     const post = await createdPost({
       title,
@@ -44,5 +50,18 @@ export const getAllPostsHandler = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching posts:", error);
     res.status(500).json({message: "Failed to fetch posts"});
+  }
+}
+
+// GET /api/posts/:id
+export const getPostByIdHandler = async (req: Request, res: Response) => {
+  try {
+    const post = await getPostById(req.params.id as string);
+
+    res.json(post);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+
+    res.status(500).json({message: "Failed to fetch post"});
   }
 }
