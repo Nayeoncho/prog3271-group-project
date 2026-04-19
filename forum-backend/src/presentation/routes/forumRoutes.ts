@@ -2,7 +2,7 @@
 // Maps URL paths to their corresponding controller functions
 import { Router } from "express";
 import { getForumSections } from "../controllers/forumController";
-import { createdPost } from "../../application/usecases/post";
+import { createPostHandler, getAllPostsHandler } from "../controllers/forumController";
 
 
 const router = Router();
@@ -10,6 +10,7 @@ const router = Router();
 // GET /api/forum-sections → runs the getForumSections controller
 router.get("/forum-sections", getForumSections);
 
-router.post("/posts", createdPost);
+router.post("/posts", createPostHandler);
+router.post("/posts", getAllPostsHandler);
 
 export default router;
