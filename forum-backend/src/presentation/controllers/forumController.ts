@@ -2,7 +2,11 @@
 // Receives HTTP requests, processes them, and returns responses
 import { Request, Response } from "express";
 import ForumSectionModel from "../../infrastructure/models/ForumSection";
-import { createdPost, getAllPosts, getPostById } from "../../application/usecases/post";
+import { createdPost, getAllPosts, getPostById, deletePost, updatePost } from "../../application/usecases/post";
+
+interface PostParams {
+  id: string;
+}
 
 // GET /api/forum-sections
 // Fetches all forum sections from MongoDB and returns them as JSON
@@ -37,6 +41,11 @@ export const createPostHandler = async (req: Request, res: Response) => {
     res.status(201).json(post);
   } catch (error) {
     console.error("Error creating post:", error);
+
+    if (error instanceof Error){
+      return res.status(400).json({message: error.message});
+    }
+
     res.status(500).json({message: "Failed to create post"});
   }
 }
@@ -62,6 +71,76 @@ export const getPostByIdHandler = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching post:", error);
 
+    if (error instanceof Error && error.message === "Post not found"){
+      return res.status(404).json({message: error.message});
+    }
+
     res.status(500).json({message: "Failed to fetch post"});
   }
+}
+
+// PUT api/posts/:id
+export const updatePostHandler = async (
+  req: Request<PostParams>,
+  res: Response
+) => {
+  try {
+    const {title, content, authorId} = req.body;
+
+    const updatedPost = await updatePost(req.params.id, authorId, {
+      title,
+      content,
+    });
+
+    res.json(updatePost);
+  } catch (error) {
+    console.error("Error updating post:", error);
+
+    if (error instanceof Error){
+
+      if (error.message === "Post not found"){
+        return res.status(404).json({message: error.message});
+      }
+
+      if (error.message === "Unauthorized"){
+        return res.status(403).json({message: error.message});
+      }
+
+      return res.status(400).json({message: error.message});
+    }
+
+    res.status(500).json({message: "Failed to update post"});
+  }
+}
+
+// DELETE
+export const deletePostHandler = async (
+  req: Request<PostParams>,
+  res: Response
+) => {
+  try {
+    const {authorId} = req.body;
+
+    await deletePost(req.params.id, authorId);
+
+    res.json({message: "post deleted successfully"});
+  } catch (error) {
+    console.error("Error deleting post:", error);
+
+    if (error instanceof Error){
+
+      if (error.message === "Post not found"){
+        return res.status(404).json({message: error.message});
+      }
+
+      if (error.message === "Unauthorized"){
+        return res.status(403).json({message: error.message});
+      }
+
+      return res.status(400).json({message: error.message});
+    }
+
+    res.status(500).json({message: "Failed to delete post"});
+  }
+
 }
