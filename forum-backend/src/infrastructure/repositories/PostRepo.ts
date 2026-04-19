@@ -18,4 +18,19 @@ export class PostRepo implements IPostRepo {
         const post = await PostModel.findById(id);
         return post ? post.toObject() : null;
     }
+
+    async update(id: string, data: Partial<PostEntity>): Promise<PostEntity | null> {
+        const updatedPost = await PostModel.findByIdAndUpdate(id, data, {
+            new: true,
+            runValidators: true,
+        });
+
+        return updatedPost ? updatedPost.toObject() : null;
+    }
+
+    async delete(id: string): Promise<PostEntity | null> {
+        const deletePost = await PostModel.findByIdAndDelete(id);
+
+        return deletePost ? deletePost.toObject() : null;
+    }
 }
