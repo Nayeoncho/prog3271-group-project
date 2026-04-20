@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { UserEntity } from "../../domain/entities/user";
 import { UserRepo } from "../../infrastructure/repositories/UserRepo";
 
@@ -36,7 +37,7 @@ export const register = async (data: {
 export const login = async (data: {
   email: string;
   password: string;
-}): Promise<Omit<UserEntity, "password">> => {
+}): Promise<{ user: Omit<UserEntity, "password">; token: string }> => {
   // Function to find user by email
   const user = await userRepo.findByEmail(data.email);
   if (!user) {
@@ -49,7 +50,16 @@ export const login = async (data: {
     throw new Error("Invalid email or password");
   }
 
-  // Return user info without password
+  // Generate JWT token
+  const secret = process.env.JWT_SECRET!;
+  const expiresIn = (process.env.JWT_EXPIRES_IN || "7d") as jwt.SignOptions["expiresIn"];
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    secret,
+    { expiresIn }
+  );
+
+  // Return user info without password + token
   const { password, ...userWithoutPassword } = user;
-  return userWithoutPassword;
+  return { user: userWithoutPassword, token };
 };
