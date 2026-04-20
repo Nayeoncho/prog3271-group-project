@@ -41,11 +41,11 @@ export const loginHandler = async (req: Request, res: Response) => {
       return;
     }
 
-    // call login user case
-    const user = await login({ email, password });
+    // call login use case
+    const { user, token } = await login({ email, password });
 
     // success response
-    res.status(200).json(user);
+    res.status(200).json({ user, token });
   } catch (error: any) {
     // invalid email, password error
     if (error.message === "Invalid email or password") {
