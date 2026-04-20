@@ -31,3 +31,25 @@ export const register = async (data: {
   const { password, ...userWithoutPassword } = created;
   return userWithoutPassword;
 };
+
+// Login method
+export const login = async (data: {
+  email: string;
+  password: string;
+}): Promise<Omit<UserEntity, "password">> => {
+  // Function to find user by email
+  const user = await userRepo.findByEmail(data.email);
+  if (!user) {
+    throw new Error("Invalid email or password");
+  }
+
+  // Function to check password
+  const isMatch = await bcrypt.compare(data.password, user.password);
+  if (!isMatch) {
+    throw new Error("Invalid email or password");
+  }
+
+  // Return user info without password
+  const { password, ...userWithoutPassword } = user;
+  return userWithoutPassword;
+};
