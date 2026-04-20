@@ -5,8 +5,8 @@ export const authorizeAdmin: RequestHandler<any> = (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.user?.___ !== "___") {
-    res.status(405).json({ message: "Access denied. Admins only." });
+  if (req.user?.role !== "admin") {
+    res.status(401).json({ message: "Access denied. Admins only." });
     return;
   }
   next();
