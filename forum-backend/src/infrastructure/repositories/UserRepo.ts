@@ -9,7 +9,8 @@ export class UserRepo implements IUserRepo {
   }
 
   async findByEmail(email: string): Promise<UserEntity | null> {
-    throw new Error("Not implemented yet");
+    const user = await UserModel.findOne({ email });
+    return user ? user.toObject() : null;
   }
 
   async findById(id: string): Promise<UserEntity | null> {
