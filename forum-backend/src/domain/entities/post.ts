@@ -4,6 +4,6 @@ export interface PostEntity {
     content: string;
     authorId: string;
     authorName?: string;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
