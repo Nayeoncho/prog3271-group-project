@@ -8,22 +8,22 @@ export const register = async (data: {
   email: string;
   password: string;
 }): Promise<Omit<UserEntity, "password">> => {
-
-  // 1. 이미 가입된 이메일인지 체크
+  // Checking email duplicate
   const existing = await userRepo.findByEmail(data.email);
   if (existing) {
     throw new Error("Email already in use");
   }
 
-  // 2. 유저 저장 (비밀번호 hash는 PSGP-39에서 추가 예정)
+  // Saveing user
   const created = await userRepo.create({
     username: data.username,
     email: data.email,
     password: data.password,
+    // set a default role as user (to make sure specific user can get admin role)
     role: "user",
   });
 
-  // 3. 비밀번호 제외하고 반환
+  // Return execpt password
   const { password, ...userWithoutPassword } = created;
   return userWithoutPassword;
 };
