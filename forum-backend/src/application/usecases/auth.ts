@@ -52,14 +52,28 @@ export const login = async (data: {
 
   // Generate JWT token
   const secret = process.env.JWT_SECRET!;
-  const expiresIn = (process.env.JWT_EXPIRES_IN || "7d") as jwt.SignOptions["expiresIn"];
-  const token = jwt.sign(
-    { id: user._id, role: user.role },
-    secret,
-    { expiresIn }
-  );
+  const expiresIn = (process.env.JWT_EXPIRES_IN ||
+    "7d") as jwt.SignOptions["expiresIn"];
+  const token = jwt.sign({ id: user._id, role: user.role }, secret, {
+    expiresIn,
+  });
 
   // Return user info without password + token
   const { password, ...userWithoutPassword } = user;
   return { user: userWithoutPassword, token };
+};
+
+// Get current user method
+export const getCurrentUser = async (
+  id: string,
+): Promise<Omit<UserEntity, "password">> => {
+  // Find user by ID from token
+  const user = await userRepo.findById(id);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Return user info without password
+  const { password, ...userWithoutPassword } = user;
+  return userWithoutPassword;
 };
