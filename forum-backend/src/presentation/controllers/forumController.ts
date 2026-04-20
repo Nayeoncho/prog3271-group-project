@@ -29,6 +29,7 @@ export const createPostHandler = async (req: Request, res: Response) => {
     // uncomment below after PSGP-4 is done
     // const authorId = req.user.id;
     // const authorName = req.user.username;
+    // const {title, content} = req.body;
 
 
     const post = await createdPost({
@@ -85,7 +86,11 @@ export const updatePostHandler = async (
   res: Response
 ) => {
   try {
-    const {title, content, authorId} = req.body;
+    const {title, content, authorId} = req.body; // using this for now since we don't have login/JWT wired yet
+
+    // uncomment below after PSGP-4 is done
+    // const authorId = req.user.id;
+    // const {title, content} = req.body;
 
     const updatedPost = await updatePost(req.params.id, authorId, {
       title,
@@ -119,7 +124,11 @@ export const deletePostHandler = async (
   res: Response
 ) => {
   try {
-    const {authorId} = req.body;
+    const {authorId} = req.body; // using this for now since we don't have login/JWT wired yet
+
+    // uncomment below after PSGP-4 is done
+    // const authorId = req.user.id;
+
 
     await deletePost(req.params.id, authorId);
 
