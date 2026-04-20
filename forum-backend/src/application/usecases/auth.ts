@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { UserEntity } from "../../domain/entities/user";
 import { UserRepo } from "../../infrastructure/repositories/UserRepo";
 
@@ -14,11 +15,14 @@ export const register = async (data: {
     throw new Error("Email already in use");
   }
 
-  // Saveing user
+  // Hash password
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+
+  // Saving user
   const created = await userRepo.create({
     username: data.username,
     email: data.email,
-    password: data.password,
+    password: hashedPassword,
     // set a default role as user (to make sure specific user can get admin role)
     role: "user",
   });

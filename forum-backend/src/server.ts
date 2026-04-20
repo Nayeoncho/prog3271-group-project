@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./infrastructure/database/mongo";
 import forumRoutes from "./presentation/routes/forumRoutes";
+import authRoutes from "./presentation/routes/authRoutes";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 // Route registration - add new routes here with a single line
 app.use("/api", forumRoutes);
+app.use("/api/auth", authRoutes);
 
 // Start server after DB connection
 connectDB()
