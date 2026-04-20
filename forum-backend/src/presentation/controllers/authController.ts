@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { register, login } from "../../application/usecases/auth";
+import {
+  register,
+  login,
+  getCurrentUser,
+} from "../../application/usecases/auth";
 
 export const registerHandler = async (req: Request, res: Response) => {
   try {
@@ -55,5 +59,24 @@ export const loginHandler = async (req: Request, res: Response) => {
     // server error
     console.error("Login error:", error);
     res.status(500).json({ message: "Failed to login" });
+  }
+};
+
+// Get current user handler method
+export const getCurrentUserHandler = async (req: Request, res: Response) => {
+  try {
+    // req.user is set by authenticate middleware
+    const id = req.user?.id as string;
+
+    const user = await getCurrentUser(id);
+
+    res.status(200).json(user);
+  } catch (error: any) {
+    if (error.message === "User not found") {
+      res.status(404).json({ message: error.message });
+      return;
+    }
+    console.error("Get current user error:", error);
+    res.status(500).json({ message: "Failed to get current user" });
   }
 };
