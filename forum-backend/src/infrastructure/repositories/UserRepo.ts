@@ -14,6 +14,7 @@ export class UserRepo implements IUserRepo {
   }
 
   async findById(id: string): Promise<UserEntity | null> {
-    throw new Error("Not implemented yet");
+    const user = await UserModel.findById(id);
+    return user ? user.toObject() : null;
   }
 }
