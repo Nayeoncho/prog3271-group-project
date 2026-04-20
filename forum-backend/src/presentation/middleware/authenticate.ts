@@ -1,11 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
 
-export const authenticate = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const authenticate: RequestHandler<any> = (req: Request, res: Response, next: NextFunction) => {
+
   // Take token from header
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {

@@ -101,7 +101,7 @@ export const updatePostHandler = async (
     // const authorId = req.user.id;
     // const {title, content} = req.body;
 
-    const updatedPost = await updatePost(req.params.id, authorId, {
+    const updatedPost = await updatePost(req.params.id as string, authorId, {
       title,
       content,
     });
@@ -139,7 +139,7 @@ export const deletePostHandler = async (
     // const authorId = req.user.id;
 
 
-    await deletePost(req.params.id, authorId);
+    await deletePost(req.params.id as string, authorId);
 
     res.json({message: "post deleted successfully"});
   } catch (error) {
@@ -178,7 +178,7 @@ export const createCommentHandler = async (
 
     const comment = await createdcomment({
       content,
-      postId: req.params.id,
+      postId: req.params.id as string,
       authorId,
       authorName,
     });
@@ -201,7 +201,7 @@ export const getCommentsByPostHandler = async(
   res: Response
 ) => {
   try {
-    const comments = await getCommentsByPostId(req.params.id);
+    const comments = await getCommentsByPostId(req.params.id as string);
 
     res.json(comments);
   } catch (error) {
@@ -222,7 +222,7 @@ export const deleteCommentHandler = async (
     // uncomment below after PSGP-4 is done
     // const authorId = req.user.id;
 
-    await deleteComment(req.params.id, authorId);
+    await deleteComment(req.params.id as string, authorId);
 
     res.json({message: "Comment deleted successfully"});
   } catch (error) {
