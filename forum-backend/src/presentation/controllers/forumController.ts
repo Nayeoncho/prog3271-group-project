@@ -44,6 +44,10 @@ export const createPostHandler = async (req: Request, res: Response) => {
   try {
     // const {title, content, authorId, authorName} = req.body; // using this for now since we don't have login/JWT wired yet
 
+    if (!req.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
     const authorName = req.user?.username;
@@ -105,6 +109,10 @@ export const updatePostHandler = async (
   try {
     // const { title, content, authorId } = req.body; // using this for now since we don't have login/JWT wired yet
 
+    if (!req.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
     const { title, content } = req.body;
@@ -142,6 +150,10 @@ export const deletePostHandler = async (
   try {
     // const { authorId } = req.body; // using this for now since we don't have login/JWT wired yet
 
+    if (!req.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
 
@@ -174,6 +186,10 @@ export const createCommentHandler = async (
 ) => {
   try {
     // const { content, authorId, authorName } = req.body; // using this for now since we don't have login/JWT wired yet
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
 
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
@@ -222,6 +238,10 @@ export const deleteCommentHandler = async (
 ) => {
   try {
     // const { authorId } = req.body; // using this for now since we don't have login/JWT wired yet
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
 
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
