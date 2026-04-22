@@ -8,15 +8,16 @@ import {
 } from "../controllers/adminController";
 import { authorizeAdmin } from "../middleware/authorizeAdmin";
 import { authenticate } from "../middleware/authenticate";
+import { authorizeSuper } from "../middleware/authorizeSuper";
 
 const router = Router();
 
 router.get("/stats", authenticate, authorizeAdmin, getStatusHandler);
-router.put("/posts/:id", authenticate, authorizeAdmin, adminUpdatePostHandler);
+router.put("/posts/:id", authenticate, authorizeSuper, adminUpdatePostHandler);
 router.delete(
   "/posts/:id",
   authenticate,
-  authorizeAdmin,
+  authorizeSuper,
   adminDeletePostHandler,
 );
 
