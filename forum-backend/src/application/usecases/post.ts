@@ -120,3 +120,19 @@ export const adaminUpdatePost = async (
 
   return updatedPost;
 };
+
+export const adminDeletePost = async (id: string): Promise<PostEntity> => {
+  const post = await postRepo.findById(id);
+
+  if (!post) {
+    throw new Error("Post not found");
+  }
+
+  const deletedPost = await postRepo.delete(id);
+
+  if (!deletedPost) {
+    throw new Error("Failed to delete post");
+  }
+
+  return deletedPost;
+};

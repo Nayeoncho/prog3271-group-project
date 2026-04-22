@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { getAdminStats } from "../../application/usecases/admin";
-import { adaminUpdatePost } from "../../application/usecases/post";
+import {
+  adaminUpdatePost,
+  adminDeletePost,
+} from "../../application/usecases/post";
 
 interface IdParams {
   id: string;
@@ -37,5 +40,24 @@ export const adminUpdatePostHandler = async (
     }
 
     res.status(400).json({ message: "Failed to updat post" });
+  }
+};
+
+export const adminDeletePostHandler = async (
+  req: Request<IdParams>,
+  res: Response,
+) => {
+  try {
+    await adminDeletePost(req.params.id);
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post as admin:", error);
+
+    if (error instanceof Error && error.message === "Post not found") {
+      return res.status(404).json({ message: error.message });
+    }
+
+    res.status(400).json({ message: "Failed to delete post" });
   }
 };
