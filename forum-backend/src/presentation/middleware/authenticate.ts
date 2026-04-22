@@ -16,7 +16,7 @@ export const authenticate: RequestHandler<any> = (req: Request, res: Response, n
   // Verify token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded as jwt.JwtPayload;
+    req.user = decoded as Express.Request["user"];
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired token" });
