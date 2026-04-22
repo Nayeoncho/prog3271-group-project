@@ -1,5 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
-
 // Extend Express Request type to include user field
 declare global {
   namespace Express {
@@ -14,3 +12,5 @@ declare global {
     }
   }
 }
+
+export {};
