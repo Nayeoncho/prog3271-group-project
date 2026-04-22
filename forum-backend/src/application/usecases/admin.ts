@@ -1,6 +1,7 @@
 import UserModel from "../../infrastructure/models/User";
 import PostModel from "../../infrastructure/models/Post";
 import CommentModel from "../../infrastructure/models/Comment";
+import LikeModel from "../../infrastructure/models/Like";
 
 interface AdminStats {
   totalUsers: number;
@@ -17,7 +18,7 @@ export const getAdminStats = async (): Promise<AdminStats> => {
   // Implement get total comments query
   const totalComments = await CommentModel.countDocuments();
   // Implement get total likes query
-  const totalLikes = 0;
+  const totalLikes = await LikeModel.countDocuments();
 
   return {
     totalUsers,
