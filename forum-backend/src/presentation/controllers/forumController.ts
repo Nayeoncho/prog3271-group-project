@@ -20,7 +20,7 @@ interface IdParams {
 }
 
 interface PostIdParams {
-  id: string;
+  postId: string;
 }
 
 interface PostParams {
@@ -114,7 +114,7 @@ export const updatePostHandler = async (
       content,
     });
 
-    res.json(updatePost);
+    res.json(updatedPost);
   } catch (error) {
     console.error("Error updating post:", error);
 
@@ -178,11 +178,11 @@ export const createCommentHandler = async (
     // uncomment below after PSGP-4 is done
     const authorId = req.user?.id;
     const authorName = req.user?.username;
-    const { title, content } = req.body;
+    const { content } = req.body;
 
     const comment = await createdcomment({
       content,
-      postId: req.params.id as string,
+      postId: req.params.postId as string,
       authorId,
       authorName,
     });
@@ -205,7 +205,7 @@ export const getCommentsByPostHandler = async (
   res: Response,
 ) => {
   try {
-    const comments = await getCommentsByPostId(req.params.id as string);
+    const comments = await getCommentsByPostId(req.params.postId as string);
 
     res.json(comments);
   } catch (error) {
@@ -217,7 +217,7 @@ export const getCommentsByPostHandler = async (
 
 // DELETE /api/comments/:id
 export const deleteCommentHandler = async (
-  req: Request<PostIdParams>,
+  req: Request<IdParams>,
   res: Response,
 ) => {
   try {
