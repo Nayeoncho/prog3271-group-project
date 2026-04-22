@@ -6,6 +6,7 @@ import connectDB from "./infrastructure/database/mongo";
 import forumRoutes from "./presentation/routes/forumRoutes";
 import authRoutes from "./presentation/routes/authRoutes";
 import adminRoutes from "./presentation/routes/adminRoutes";
+import likeRoutes from "./presentation/routes/likeRoutes";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 app.use("/api", forumRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/posts", likeRoutes);
 
 // Start server after DB connection
 connectDB()
