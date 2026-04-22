@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { PostEntity } from "../../domain/entities/post";
 import { PostRepo } from "../../infrastructure/repositories/PostRepo";
 
@@ -96,7 +95,7 @@ export const deletePost = async (
   return deletedPost;
 };
 
-export const adaminUpdatePost = async (
+export const adminUpdatePost = async (
   id: string,
   data: {
     title?: string;

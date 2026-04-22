@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getAdminStats } from "../../application/usecases/admin";
 import {
-  adaminUpdatePost,
+  adminUpdatePost,
   adminDeletePost,
 } from "../../application/usecases/post";
 
@@ -26,7 +26,7 @@ export const adminUpdatePostHandler = async (
   try {
     const { title, content } = req.body;
 
-    const updatedPost = await adaminUpdatePost(req.params.id, {
+    const updatedPost = await adminUpdatePost(req.params.id, {
       title,
       content,
     });
