@@ -1,12 +1,11 @@
 import { LikeRepo } from "../../infrastructure/repositories/LikeRepo";
 import PostModel from "../../infrastructure/models/Post";
 
-const likeRepo = new LikeRepo();
-
 export const likePost = async (
   userId: string,
   postId: string,
 ): Promise<void> => {
+  const likeRepo = new LikeRepo();
   // check duplication
   const existing = await likeRepo.findByUserAndPost(userId, postId);
   if (existing) {
@@ -24,6 +23,7 @@ export const unlikePost = async (
   userId: string,
   postId: string,
 ): Promise<void> => {
+  const likeRepo = new LikeRepo();
   // check like history
   const existing = await likeRepo.findByUserAndPost(userId, postId);
   if (!existing) {
