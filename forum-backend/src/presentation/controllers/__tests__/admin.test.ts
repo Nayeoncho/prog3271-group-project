@@ -4,11 +4,11 @@ import PostModel from "../../../infrastructure/models/Post";
 import CommentModel from "../../../infrastructure/models/Comment";
 import LikeModel from "../../../infrastructure/models/Like";
 
-// Mock datase
-jest.mock("../../infrastructure/models/User");
-jest.mock("../../infrastructure/models/Post");
-jest.mock("../../infrastructure/models/Comment");
-jest.mock("../../infrastructure/models/Like");
+// Mock dataset
+jest.mock("../../../infrastructure/models/User");
+jest.mock("../../../infrastructure/models/Post");
+jest.mock("../../../infrastructure/models/Comment");
+jest.mock("../../../infrastructure/models/Like");
 
 // TEST 1: Check everything returns correct numbers
 describe("Test 1: Check everything returns correct numbers", () => {
