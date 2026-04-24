@@ -4,10 +4,10 @@ import { UserEntity } from "../../domain/entities/user";
 
 const userSchema = new mongoose.Schema<UserEntity>(
   {
-    username: { type: String, required: true, unique: true }, // duplicate
-    email: { type: String, required: true, unique: true }, // duplicate
-    password: { type: String, required: true }, // will store
-    role: { type: String, enum: ["user", "admin", "super"], default: "user" }, // default
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ["user", "admin", "super"], default: "user" },
   },
   {
     collection: "users", // stored as "users" collection in Atlase
